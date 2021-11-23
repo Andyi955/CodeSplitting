@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useQuery } from "react-query";
 import { getMovieReviews } from "../api";
-import MovieReview from "../components/movieReview";
+const MovieReview = lazy(() => import("../components/movieReview"));
 
 const MovieReviewers = (props) => {
   const { id } = props.match.params;
@@ -30,9 +30,11 @@ const MovieReviewers = (props) => {
     <>
       <h1>Movie Reviewers</h1>
       <ul>{reviewsAuthors}</ul>
+      <Suspense fallback={<h1>Loading page</h1>}>
       {selectedReview !== undefined ? (
         <MovieReview review={reviews[selectedReview]} />
       ) : null}
+      </Suspense>
     </>
   );
 };

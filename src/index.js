@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import HomePage from "./pages/homePage";
+const HomePage = lazy(() => import("./pages/homePage"));
 const MoviePage = lazy(() => import("./pages/movieDetailsPage"));
-import MovieReviewersPage from "./pages/reviewersPage";
+const MovieReviewersPage = lazy(() => import( "./pages/reviewersPage"));
 import './style.css'
 
 const queryClient = new QueryClient({
