@@ -1,10 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import HomePage from "./pages/homePage";
-import MoviePage from "./pages/movieDetailsPage";
+const MoviePage = lazy(() => import("./pages/movieDetailsPage"));
 import MovieReviewersPage from "./pages/reviewersPage";
 import './style.css'
 
@@ -23,12 +23,14 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Link to="/">Home</Link>
+        <Suspense fallback={<h1>Loading page</h1>}>
           <Switch> 
             <Route path="/movies/:id/reviewers" component={MovieReviewersPage} />
             <Route path="/movies/:id" component={MoviePage} />
             <Route exact path="/" component={HomePage} />
             <Redirect from="*" to="/" />
           </Switch>
+          </Suspense>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
